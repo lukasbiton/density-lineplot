@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "density-lineplot"
+version = "0.1.0"
+description = ""
+authors = ["lukasbiton <67839306+lukasbiton@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+numpy = "^2.2.0"
+matplotlib = "^3.9.3"
+scipy = "^1.14.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
