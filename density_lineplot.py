@@ -65,5 +65,5 @@ if __name__ == "__main__":
     data = np.random.normal(xs, np.random.uniform(2,8,xs.shape))
     density_lineplot(data, "normal")
 
-    # data = np.random.normal(xs, np.random.uniform(2,8,xs.shape))
-    # density_lineplot(data, "normal")
+    data = np.random.gamma(xs, np.random.uniform(2,8,xs.shape))
+    density_lineplot(data, "gamma")
