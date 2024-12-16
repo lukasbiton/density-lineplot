@@ -3,10 +3,14 @@ For a given timeseries, reduce the frequency (e.g. from every second to every ho
 and plot the density per new time unit over time.
 """
 
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
 from scipy.interpolate import interpn
+
+plt.style.use("dark_background")
 
 def jitter_x_axis(x: npt.NDArray):
     """Jitter data points on the x-axis."""
@@ -35,7 +39,7 @@ def density_lineplot(data: npt.NDArray, out: str):
     
     for row_idx in range(data.shape[0]):
 
-        x = row_idx*np.ones(data.shape[1]) 
+        x = row_idx*np.ones(data.shape[1])
         jittered_x = jitter_x_axis(x)
         y_set = data[row_idx]
         z = make_density_color(x, y_set, 20)
@@ -48,22 +52,25 @@ def density_lineplot(data: npt.NDArray, out: str):
             cmap="magma",
         )
 
-    plt.savefig(out)
+    plt.savefig(f"{out}.png")
     plt.close()
 
 if __name__ == "__main__":
 
+    out = "out_density_line/"
+    os.makedirs(out, exist_ok=True)
+    
     time_indices = 100
     data_points_per_time = 500
 
     xs = (np.ones((time_indices, data_points_per_time))
           * np.reshape(np.linspace(1, time_indices, time_indices), (-1, 1)))
 
-    data = np.random.exponential(1/xs)
-    density_lineplot(data, "exponential")
+    data = np.random.negative_binomial(100,1/xs)
+    density_lineplot(data, f"{out}neg_bin")
 
-    data = np.random.normal(xs, np.random.uniform(2,8,xs.shape))
-    density_lineplot(data, "normal")
+    data = np.random.normal(np.sin(xs), np.random.uniform(2,8,xs.shape))
+    density_lineplot(data, f"{out}normal")
 
     data = np.random.gamma(xs, np.random.uniform(2,8,xs.shape))
-    density_lineplot(data, "gamma")
+    density_lineplot(data, f"{out}gamma")
